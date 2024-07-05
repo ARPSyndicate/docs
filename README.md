@@ -16,7 +16,7 @@
 [Exploit Observer](https://www.exploit.observer) is a Vulnerability / Exploit Intelligence API.
 
 ### Endpoints without authentication
-- Returns information related to  [vulnerability identifiers](#supported-vids)<br
+- Returns information related to  [vulnerability identifiers](#supported-vids)<br>
 `GET` https://api.exploit.observer/?keyword={VID}
 
 - Returns a list of VEDAS identifiers associated with a Russian VID but not a CVE<br>
