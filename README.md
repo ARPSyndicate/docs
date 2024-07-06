@@ -12,7 +12,7 @@
 - Returns a list of subdomains for a domain<br>
 `GET` https://api.subdomain.center/beta/?domain={DOMAIN}&auth={AUTH}
     - `domain` (string | mandatory): searches by any domain
-    - `auth` (string | mandatory): authentication code
+    - `auth` (string | mandatory): [authentication code](https://www.arpsyndicate.io/pricing.html)
 
 
 ## Exploit Observer
@@ -21,8 +21,8 @@
 ### Endpoints without authentication (aggressive ratelimits)
 - Returns information related to a VID<br>
 `GET` https://api.exploit.observer/?keyword={VID}&enrich={TRUE/FALSE}
-    - `keyword` (string | mandatory): searches by any supported [vulnerability identifiers](#supported-vids)
-    - `enrich` (boolean | optional): enriches in CVE/OSV formats
+    - `keyword` (string | mandatory): searches by any of the [supported vulnerability identifiers](#supported-vulnerability-identifiers)
+    - `enrich` (boolean | optional): enables enrichment with additional data points for CVE/GHSA IDs
 
 - Returns a list of VEDAS identifiers associated with a Russian VID but not a CVE<br>
 `GET` https://api.exploit.observer/russia/noncve
@@ -36,11 +36,11 @@
 ### Endpoints with authentication (no ratelimits)
 - Returns information related to a VID<br>
 `GET` https://api.exploit.observer/beta/?keyword={VID}&enrich={TRUE/FALSE}&auth={AUTH}
-    - `keyword` (string | mandatory): searches by any supported [vulnerability identifiers](#supported-vids)
-    - `enrich` (boolean | optional): enriches in CVE/OSV formats
-    - `auth` (string | mandatory): authentication code
+    - `keyword` (string | mandatory): searches by any of the [supported vulnerability identifiers](#supported-vulnerability-identifiers)
+    - `enrich` (boolean | optional): enables enrichment with additional data points for CVE/GHSA IDs
+    - `auth` (string | mandatory): [authentication code](https://www.arpsyndicate.io/pricing.html)
 
-### Supported VIDs
+### Supported Vulnerability Identifiers
 - A.R.P. Syndicate Vulnerability & Exploit Data Aggregation System (VEDAS) - `VEDAS:OBLIVIONHAWK`
 - Common Vulnerabilities and Exposures (CVE) - `CVE-2021-3450`
 - Russian Data Bank of Information Security Threats (BDU) - `BDU:2024-00390`
