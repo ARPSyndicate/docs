@@ -3,21 +3,26 @@
 ## Subdomain Center
 [Subdomain Center](https://www.subdomain.center) is a Shadow IT / Subdomain Intelligence API.
 
-### Endpoints without authentication
+### Endpoints without authentication (aggressive ratelimits)
 - Returns a list of subdomains for a domain<br>
 `GET` https://api.subdomain.center/?domain={DOMAIN}
+    - `domain` (string | mandatory): searches by any domain
 
-### Endpoints with authentication
+### Endpoints with authentication (no ratelimits)
 - Returns a list of subdomains for a domain<br>
 `GET` https://api.subdomain.center/beta/?domain={DOMAIN}&auth={AUTH}
+    - `domain` (string | mandatory): searches by any domain
+    - `auth` (string | mandatory): authentication code
 
 
 ## Exploit Observer
 [Exploit Observer](https://www.exploit.observer) is a Vulnerability / Exploit Intelligence API.
 
-### Endpoints without authentication
-- Returns information related to  [vulnerability identifiers](#supported-vids)<br>
-`GET` https://api.exploit.observer/?keyword={VID}
+### Endpoints without authentication (aggressive ratelimits)
+- Returns information related to a VID<br>
+`GET` https://api.exploit.observer/?keyword={VID}&enrich={TRUE/FALSE}
+    - `keyword` (string | mandatory): searches by any supported [vulnerability identifiers](#supported-vids)
+    - `enrich` (boolean | optional): enriches in CVE/OSV formats
 
 - Returns a list of VEDAS identifiers associated with a Russian VID but not a CVE<br>
 `GET` https://api.exploit.observer/russia/noncve
@@ -25,9 +30,15 @@
 - Returns a list of VEDAS identifiers associated with a Chinese VID but not a CVE<br>
 `GET` https://api.exploit.observer/china/noncve
 
-### Endpoints with authentication
-- Returns information related to [vulnerability identifiers](#supported-vids)<br>
-`GET` https://api.exploit.observer/beta/?keyword={VID}&auth={AUTH}
+- Returns a vulnerability watchlist<br>
+`GET` https://api.exploit.observer/watchlist
+    
+### Endpoints with authentication (no ratelimits)
+- Returns information related to a VID<br>
+`GET` https://api.exploit.observer/beta/?keyword={VID}&enrich={TRUE/FALSE}&auth={AUTH}
+    - `keyword` (string | mandatory): searches by any supported [vulnerability identifiers](#supported-vids)
+    - `enrich` (boolean | optional): enriches in CVE/OSV formats
+    - `auth` (string | mandatory): authentication code
 
 ### Supported VIDs
 - A.R.P. Syndicate Vulnerability & Exploit Data Aggregation System (VEDAS) - `VEDAS:OBLIVIONHAWK`
