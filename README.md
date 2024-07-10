@@ -22,7 +22,7 @@
 - Returns information related to a VID<br>
 `GET` https://api.exploit.observer/?keyword={VID}&enrich={TRUE/FALSE}
     - `keyword` (string | mandatory): searches by any of the [supported vulnerability identifiers](#supported-vulnerability-identifiers)
-    - `enrich` (boolean | optional): enables enrichment with additional data points for CVE/GHSA IDs
+    - `enrich` (boolean | optional): enables enrichment with additional data points for CVE/GHSA IDs (Includes EPSS, Aliases & Additional References)
 
 - Returns a list of VEDAS identifiers associated with a Russian VID but not a CVE<br>
 `GET` https://api.exploit.observer/russia/noncve
@@ -37,7 +37,7 @@
 - Returns information related to a VID<br>
 `GET` https://api.exploit.observer/beta/?keyword={VID}&enrich={TRUE/FALSE}&auth={AUTH}
     - `keyword` (string | mandatory): searches by any of the [supported vulnerability identifiers](#supported-vulnerability-identifiers)
-    - `enrich` (boolean | optional): enables enrichment with additional data points for CVE/GHSA IDs
+    - `enrich` (boolean | optional): enables enrichment with additional data points for CVE/GHSA IDs (Includes EPSS, Aliases & Additional References)
     - `auth` (string | mandatory): [authentication code](https://www.arpsyndicate.io/pricing.html)
 
 ### Supported Vulnerability Identifiers
