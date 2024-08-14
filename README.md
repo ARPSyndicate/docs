@@ -18,6 +18,16 @@
 ## Exploit Observer
 [Exploit Observer](https://www.exploit.observer) is a Vulnerability / Exploit Intelligence API.
 
+### Endpoints without authentication (no ratelimits)
+- Returns a watchlist of vulnerability & exploit identifiers<br>
+`GET` https://api.exploit.observer/watchlist/identifiers
+
+- Returns a watchlist of vulnerable technologies<br>
+`GET` https://api.exploit.observer/watchlist/technologies
+
+- Returns statistics around all vulnerabilities & exploits<br>
+`GET` https://api.exploit.observer/stats
+
 ### Endpoints without authentication (aggressive ratelimits)
 - Returns information related to a VID<br>
 `GET` https://api.exploit.observer/?keyword={VID}&enrich={TRUE/FALSE}
@@ -30,9 +40,6 @@
 - Returns a list of VEDAS identifiers associated with a Chinese VID but not a CVE<br>
 `GET` https://api.exploit.observer/china/noncve
 
-- Returns a vulnerability watchlist<br>
-`GET` https://api.exploit.observer/watchlist
-    
 ### Endpoints with authentication (no ratelimits)
 - Returns information related to a VID<br>
 `GET` https://api.exploit.observer/beta/?keyword={VID}&enrich={TRUE/FALSE}&auth={AUTH}
