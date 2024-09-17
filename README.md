@@ -3,15 +3,23 @@
 ## Subdomain Center
 [Subdomain Center](https://www.subdomain.center) is a Shadow IT / Subdomain Intelligence API.
 
-### Endpoints without authentication (aggressive ratelimits)
+### Endpoints without authentication (aggressive ratelimits, limited access)
 - Returns a list of subdomains for a domain<br>
-`GET` https://api.subdomain.center/?domain={DOMAIN}
-    - `domain` (string | mandatory): searches by any domain
+`GET` https://api.subdomain.center/?domain={DOMAIN}&engine={ENGINE}
+    - `domain` (string | mandatory): searches by any domain/subdomain
+    - `engine` (string | optional): choose a clustering engine
+        - `cuttlefish` (default): clusters by identical domain
+        - `octopus`: clusters by identical technology
+        - `squid`: clusters by similar technology
 
-### Endpoints with authentication (no ratelimits)
+### Endpoints with authentication (no ratelimits, full access)
 - Returns a list of subdomains for a domain<br>
-`GET` https://api.subdomain.center/beta/?domain={DOMAIN}&auth={AUTH}
-    - `domain` (string | mandatory): searches by any domain
+`GET` https://api.subdomain.center/beta/?domain={DOMAIN}&engine={ENGINE}&auth={AUTH}
+    - `domain` (string | mandatory): searches by any domain/subdomain
+    - `engine` (string | optional): choose a clustering engine
+        - `cuttlefish` (default): clusters by identical domain
+        - `octopus`: clusters by identical technology
+        - `squid`: clusters by similar technology
     - `auth` (string | mandatory): [authentication code](https://www.arpsyndicate.io/pricing.html)
 
 
