@@ -1,5 +1,19 @@
 # API Documentation
 
+## Osprey Vision
+[Osprey Vision](https://www.osprey.vision) is a Cyber Intelligence LLM API.
+
+### Endpoints without authentication (aggressive ratelimits, limited access)
+- Returns a streaming response for a prompt<br>
+`POST` https://api.osprey.vision/
+    - `prompt` (json dict string | mandatory): ask any query
+
+### Endpoints with authentication (no ratelimits, full access)
+- Returns a streaming response for a prompt<br>
+`POST` https://api.osprey.vision/
+    - `prompt` (json dict string | mandatory): ask any query
+    - `auth` (json dict string | mandatory): [authentication code](https://www.arpsyndicate.io/pricing.html)
+
 ## Subdomain Center
 [Subdomain Center](https://www.subdomain.center) is a Shadow IT / Subdomain Intelligence API.
 
