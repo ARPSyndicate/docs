@@ -10,7 +10,7 @@
 
 ### Endpoints with authentication (no ratelimits, full access)
 - Returns a streaming response for a prompt<br>
-`POST` https://api.osprey.vision/
+`POST` https://api.osprey.vision/beta/
     - `prompt` (json dict string | mandatory): ask any query
     - `auth` (json dict string | mandatory): [authentication code](https://www.arpsyndicate.io/pricing.html)
 
