@@ -14,6 +14,7 @@
     - `prompt` (json dict string | mandatory): ask any query
     - `auth` (json dict string | mandatory): [authentication code](https://www.arpsyndicate.io/pricing.html)
 
+- Returns a summary for a list of webpages<br>
 `POST` https://api.osprey.vision/summarize/
     - `links` (json dict string | mandatory): HTTP/HTTPS links separated by space/newline
     - `auth` (json dict string | mandatory): [authentication code](https://www.arpsyndicate.io/pricing.html)
