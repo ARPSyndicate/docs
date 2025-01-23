@@ -1,7 +1,7 @@
 # API Documentation
 
 ## Osprey Vision
-[Osprey Vision](https://www.osprey.vision) is a Cyber Intelligence LLM API.
+[Osprey Vision](https://www.osprey.vision) is an Artificial Intelligence API for Information Discovery.
 
 ### Endpoints without authentication (aggressive ratelimits, limited access)
 - Returns a streaming response for a prompt<br>
@@ -12,6 +12,10 @@
 - Returns a streaming response for a prompt<br>
 `POST` https://api.osprey.vision/beta/
     - `prompt` (json dict string | mandatory): ask any query
+    - `auth` (json dict string | mandatory): [authentication code](https://www.arpsyndicate.io/pricing.html)
+
+`POST` https://api.osprey.vision/summarize/
+    - `links` (json dict string | mandatory): HTTP/HTTPS links separated by space/newline
     - `auth` (json dict string | mandatory): [authentication code](https://www.arpsyndicate.io/pricing.html)
 
 ## Subdomain Center
