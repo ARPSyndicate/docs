@@ -47,6 +47,9 @@
 - Returns a watchlist of vulnerability & exploit identifiers<br>
 `GET` https://api.exploit.observer/watchlist/identifiers
 
+- Returns a detailed watchlist of vulnerability & exploit identifiers<br>
+`GET` https://api.exploit.observer/watchlist/describers
+
 - Returns a watchlist of vulnerable technologies<br>
 `GET` https://api.exploit.observer/watchlist/technologies
 
@@ -57,7 +60,7 @@
 - Returns information related to a VID<br>
 `GET` https://api.exploit.observer/?keyword={VID}&enrich={TRUE/FALSE}
     - `keyword` (string | mandatory): searches by any of the [supported vulnerability identifiers](#supported-vulnerability-identifiers)
-    - `enrich` (boolean | optional): enables enrichment with additional data points for CVE/GHSA IDs (Includes EPSS, Aliases & Additional References)
+    - `enrich` (boolean | optional): enables enrichment with additional data points for CVE/GHSA IDs (Includes EPSS, Aliases, Affected Products & Additional References)
 
 - Returns a list of VEDAS identifiers associated with a Russian VID but not a CVE<br>
 `GET` https://api.exploit.observer/russia/noncve
@@ -69,7 +72,7 @@
 - Returns information related to a VID<br>
 `GET` https://api.exploit.observer/beta/?keyword={VID}&enrich={TRUE/FALSE}&auth={AUTH}
     - `keyword` (string | mandatory): searches by any of the [supported vulnerability identifiers](#supported-vulnerability-identifiers)
-    - `enrich` (boolean | optional): enables enrichment with additional data points for CVE/GHSA IDs (Includes EPSS, Aliases & Additional References)
+    - `enrich` (boolean | optional): enables enrichment with additional data points for CVE/GHSA IDs (Includes EPSS, Aliases, Affected Products & Additional References)
     - `auth` (string | mandatory): [authentication code](https://www.arpsyndicate.io/pricing.html)
 
 ### Supported Vulnerability Identifiers
@@ -80,6 +83,7 @@
 - China National Vulnerability Database of Information Security (CNNVD) - `CNNVD-202312-2255`
 - Japan Vulnerability Notes iPedia (JVNDB) - `JVNDB-2023-006199`
 - GitHub Security Advisories (GHSA) - `GHSA-wfh5-x68w-hvw2`
+- Linux Open Source Security Foundation (OSSF) - `OSSF-OSV-2024-1427`
 - GitHub Commits (GHCOMMIT) - `GHCOMMIT-102448040d5132460e3b0013e03ebedec0677e00`
 - Veracode SourceClear Vulnerability Database (SRCCLR-SID) - `SRCCLR-SID-3173`
 - Snyk Vulnerability Database (SNYK) - `SNYK-JAVA-ORGCLOJURE-5740378`
