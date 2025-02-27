@@ -104,5 +104,14 @@
 - Zero Science Lab (ZSL) - `ZSL-2022-5743`
 - VARIoT Exploits (VAR-E) - `VAR-E-201704-0525`
 - VARIoT Vulnerabilities (VAR) - `VAR-202404-0085`
+- Patchstack (PATCHSTACK) - `PATCHSTACK/spectrum/wordpress-spectrum-theme-remote-code-execution`
+- Source Incite (SRC) - `SRC-2021-0019`
+- Google Chromium Issues (CHROMIUM) - `CHROMIUM-40057791`
+- Mozilla Foundation Issues (MOZILLA) - `MOZILLA-290162`
+- Mozilla Foundation Security Advisories (MFSA) - `MFSA2024-51`
+- Microsoft Common Vulnerabilities and Exposures (MSCVE) - `MSCVE-2025-21415`
+- RedHat Common Vulnerabilities and Exposures (RHCVE) - `RHCVE-2025-27098`
+- RedHat Issues (REDHAT) - `REDHAT-290162`
+- RedHat Security Advisories (RHSA) - `RHSA-2025:1730`
 - Vendor/Product (No Prefix) - `grafana`
 - Vendor/Product + Version (No Prefix) - `felixwelberg@1.0.45`
