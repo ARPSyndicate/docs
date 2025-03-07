@@ -77,45 +77,46 @@
 
 ### Supported Vulnerability Identifiers
 - A.R.P. Syndicate Vulnerability & Exploit Data Aggregation System (VEDAS) - `VEDAS:OBLIVIONHAWK`
-- Common Vulnerabilities and Exposures (CVE) - `CVE-2021-3450`
-- Russian Data Bank of Information Security Threats (BDU) - `BDU:2024-00390`
 - China National Vulnerability Database (CNVD) - `CNVD-2024-02713`
 - China National Vulnerability Database of Information Security (CNNVD) - `CNNVD-202312-2255`
-- Japan Vulnerability Notes iPedia (JVNDB) - `JVNDB-2023-006199`
-- GitHub Security Advisories (GHSA) - `GHSA-wfh5-x68w-hvw2`
-- Linux Open Source Security Foundation (OSSF) - `OSSF-OSV-2024-1427`
-- GitHub Commits (GHCOMMIT) - `GHCOMMIT-102448040d5132460e3b0013e03ebedec0677e00`
-- Veracode SourceClear Vulnerability Database (SRCCLR-SID) - `SRCCLR-SID-3173`
-- Snyk Vulnerability Database (SNYK) - `SNYK-JAVA-ORGCLOJURE-5740378`
-- OffSec Exploit Database (EDB) - `EDB-10102`
-- 0Day Today (0DAY-ID) - `0DAY-ID-24705`
-- Knownsec Seebug (SSVID) - `SSVID-99817`
-- Trend Micro Zero Day Initiative (ZDI) - `ZDI-23-1714`
-- Packet Storm Security (PSS) - `PSS-170615`
-- CXSecurity World Laboratory of Bugtraq (WLB) - `WLB-2024010058`
-- Rapid7 Metasploit Framework (MSF) - `MSF/auxiliary_admin/2wire/xslt_password_reset`
-- ProjectDiscovery Nuclei (PD) - `PD/http/cves/2020/CVE-2020-12720`
-- Hackerone Hacktivity (H1) - `H1-2230915`
 - Cisco Talos (TALOS) - `TALOS-2023-1896`
-- ProtectAI Huntr (HUNTR) - `HUNTR-001d1c29-805a-4035-93bb-71a0e81da3e5`
-- WP Engine WPScan (WPSCAN) - `WPSCAN-52568abd-c509-411e-8391-c75e7613eb42`
+- Common Vulnerabilities and Exposures (CVE) - `CVE-2021-3450`
+- CXSecurity World Laboratory of Bugtraq (WLB) - `WLB-2024010058`
 - Defiant Wordfence (WORDFENCE) - `WORDFENCE-00086b84-c1ec-447a-a536-1c73eac1cc85`
-- YouTube (YT) - `YT/ccqjhUmwLCk`
-- Zero Science Lab (ZSL) - `ZSL-2022-5743`
-- VARIoT Exploits (VAR-E) - `VAR-E-201704-0525`
-- VARIoT Vulnerabilities (VAR) - `VAR-202404-0085`
-- Patchstack (PATCHSTACK) - `PATCHSTACK/spectrum/wordpress-spectrum-theme-remote-code-execution`
-- Source Incite (SRC) - `SRC-2021-0019`
+- GitHub Commits (GHCOMMIT) - `GHCOMMIT-102448040d5132460e3b0013e03ebedec0677e00`
+- GitHub Repositories (GITHUB) - `GITHUB/aio-libs/aiohttp`
+- GitHub Security Advisories (GHSA) - `GHSA-wfh5-x68w-hvw2`
 - Google Chromium Issues (CHROMIUM) - `CHROMIUM-40057791`
+- Hackerone Hacktivity (H1) - `H1-2230915`
+- Japan Vulnerability Notes iPedia (JVNDB) - `JVNDB-2023-006199`
+- Knownsec Seebug (SSVID) - `SSVID-99817`
+- Linux Open Source Security Foundation (OSSF) - `OSSF-OSV-2024-1427`
+- Microsoft Common Vulnerabilities and Exposures (MSCVE) - `MSCVE-2025-21415`
 - Mozilla Foundation Issues (MOZILLA) - `MOZILLA-290162`
 - Mozilla Foundation Security Advisories (MFSA) - `MFSA2024-51`
-- Microsoft Common Vulnerabilities and Exposures (MSCVE) - `MSCVE-2025-21415`
+- OffSec Exploit Database (EDB) - `EDB-10102`
+- openSUSE Common Vulnerabilities and Exposures (SUCVE) - `SUCVE-2023-40547`
+- openSUSE Issues (SUSE) - `SUSE-1183851`
+- Packet Storm Security (PSS) - `PSS-170615`
+- Patchstack (PATCHSTACK) - `PATCHSTACK/spectrum/wordpress-spectrum-theme-remote-code-execution`
+- ProjectDiscovery Nuclei (PD) - `PD/http/cves/2020/CVE-2020-12720`
+- ProtectAI Huntr (HUNTR) - `HUNTR-001d1c29-805a-4035-93bb-71a0e81da3e5`
+- Rapid7 Metasploit Framework (MSF) - `MSF/auxiliary_admin/2wire/xslt_password_reset`
 - RedHat Common Vulnerabilities and Exposures (RHCVE) - `RHCVE-2025-27098`
 - RedHat Issues (REDHAT) - `REDHAT-290162`
 - RedHat Security Advisories (RHSA) - `RHSA-2025:1730`
-- openSUSE Common Vulnerabilities and Exposures (SUCVE) - `SUCVE-2023-40547`
-- openSUSE Issues (SUSE) - `SUSE-1183851`
-- Tenable Security Advisories (TNS) - `TNS-2021-05`
+- Russian Data Bank of Information Security Threats (BDU) - `BDU:2024-00390`
+- Snyk Vulnerability Database (SNYK) - `SNYK-JAVA-ORGCLOJURE-5740378`
+- Source Incite (SRC) - `SRC-2021-0019`
 - Tenable Common Vulnerabilities and Exposures (TNCVE) - `TNCVE-2025-25763`
+- Tenable Security Advisories (TNS) - `TNS-2021-05`
+- Trend Micro Zero Day Initiative (ZDI) - `ZDI-23-1714`
+- VARIoT Exploits (VAR-E) - `VAR-E-201704-0525`
+- VARIoT Vulnerabilities (VAR) - `VAR-202404-0085`
 - Vendor/Product ({vendor}__{product}) - `grafana`
 - Vendor/Product + Version ({vendor}__{product}@{version}) - `felixwelberg@1.0.45`
+- Veracode SourceClear Vulnerability Database (SRCCLR-SID) - `SRCCLR-SID-3173`
+- WP Engine WPScan (WPSCAN) - `WPSCAN-52568abd-c509-411e-8391-c75e7613eb42`
+- YouTube (YT) - `YT/ccqjhUmwLCk`
+- Zero Science Lab (ZSL) - `ZSL-2022-5743`
+- 0Day Today (0DAY-ID) - `0DAY-ID-24705`
