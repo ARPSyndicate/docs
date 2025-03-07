@@ -113,5 +113,9 @@
 - RedHat Common Vulnerabilities and Exposures (RHCVE) - `RHCVE-2025-27098`
 - RedHat Issues (REDHAT) - `REDHAT-290162`
 - RedHat Security Advisories (RHSA) - `RHSA-2025:1730`
+- openSUSE Common Vulnerabilities and Exposures (SUCVE) - `SUCVE-2023-40547`
+- openSUSE Issues (SUSE) - `SUSE-1183851`
+- Tenable Security Advisories (TNS) - `TNS-2021-05`
+- Tenable Common Vulnerabilities and Exposures (TNCVE) - `TNCVE-2025-25763`
 - Vendor/Product ({vendor}__{product}) - `grafana`
 - Vendor/Product + Version ({vendor}__{product}@{version}) - `felixwelberg@1.0.45`
