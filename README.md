@@ -113,10 +113,11 @@
 - Trend Micro Zero Day Initiative (ZDI) - `ZDI-23-1714`
 - VARIoT Exploits (VAR-E) - `VAR-E-201704-0525`
 - VARIoT Vulnerabilities (VAR) - `VAR-202404-0085`
-- Vendor/Product ({vendor}__{product}) - `grafana`
-- Vendor/Product + Version ({vendor}__{product}@{version}) - `felixwelberg@1.0.45`
 - Veracode SourceClear Vulnerability Database (SRCCLR-SID) - `SRCCLR-SID-3173`
 - WP Engine WPScan (WPSCAN) - `WPSCAN-52568abd-c509-411e-8391-c75e7613eb42`
 - YouTube (YT) - `YT/ccqjhUmwLCk`
 - Zero Science Lab (ZSL) - `ZSL-2022-5743`
 - 0Day Today (0DAY-ID) - `0DAY-ID-24705`
+- Vendor/Product ({vendor}__{product}) - `grafana`
+- Vendor/Product + Version ({vendor}__{product}@{version}) - `felixwelberg@1.0.45`
+- Multiple Non-VID Keywords ({keywordA}__{keywordB}) - `pci__util`
