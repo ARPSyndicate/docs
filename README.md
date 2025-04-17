@@ -86,7 +86,9 @@
 - GitHub Commits (GHCOMMIT) - `GHCOMMIT-102448040d5132460e3b0013e03ebedec0677e00`
 - GitHub Repositories (GITHUB) - `GITHUB/aio-libs/aiohttp`
 - GitHub Security Advisories (GHSA) - `GHSA-wfh5-x68w-hvw2`
+- Google Bug Hunters VRP (GBHVRP) - `GBHVRP-F8GFYGv4g`
 - Google Chromium Issues (CHROMIUM) - `CHROMIUM-40057791`
+- Google Project Zero (PROJECTZERO) - `PROJECTZERO-42450487`
 - Hackerone Hacktivity (H1) - `H1-2230915`
 - Japan Vulnerability Notes iPedia (JVNDB) - `JVNDB-2023-006199`
 - Knownsec Seebug (SSVID) - `SSVID-99817`
