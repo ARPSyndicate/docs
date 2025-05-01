@@ -14,9 +14,15 @@
     - `prompt` (json dict string | mandatory): ask any query
     - `auth` (json dict string | mandatory): [authentication code](https://www.arpsyndicate.io/pricing.html)
 
-- Returns a summary for a list of webpages<br>
+- Returns a streaming response containing a summary for a list of webpages<br>
 `POST` https://api.osprey.vision/summarize/
     - `links` (json dict string | mandatory): HTTP/HTTPS links separated by space/newline
+    - `auth` (json dict string | mandatory): [authentication code](https://www.arpsyndicate.io/pricing.html)
+
+- Returns a streaming response containing a vulnerability advisory<br>
+`POST` https://api.osprey.vision/advisory/
+    - `vulnid` (json dict string | mandatory): generates for a [supported vulnerability identifier](#supported-vulnerability-identifiers)
+    - `lang` (json dict string | mandatory): choose from English, Mandarin, Spanish, Russian, French, German, Finnish, Estonian, Japanese, Korean, Italian & Hindi
     - `auth` (json dict string | mandatory): [authentication code](https://www.arpsyndicate.io/pricing.html)
 
 ## Subdomain Center
