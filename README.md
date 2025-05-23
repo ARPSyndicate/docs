@@ -89,6 +89,7 @@
 - Common Vulnerabilities and Exposures (CVE) - `CVE-2021-3450`
 - CXSecurity World Laboratory of Bugtraq (WLB) - `WLB-2024010058`
 - Defiant Wordfence (WORDFENCE) - `WORDFENCE-00086b84-c1ec-447a-a536-1c73eac1cc85`
+- European Union Vulnerability Database (EUVD) - `EUVD-2025-14498`
 - GitHub Commits (GHCOMMIT) - `GHCOMMIT-102448040d5132460e3b0013e03ebedec0677e00`
 - GitHub Repositories (GITHUB) - `GITHUB/aio-libs/aiohttp`
 - GitHub Security Advisories (GHSA) - `GHSA-wfh5-x68w-hvw2`
