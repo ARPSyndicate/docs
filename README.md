@@ -60,7 +60,7 @@ GET /?domain={DOMAIN}&engine={ENGINE}&keyword={KEYWORD}&match={MATCH}&limit={LIM
 | `keyword` | string | for `ammonites` | A subdomain label to search for; supplying `keyword` without `engine` implies `engine=ammonites` |
 | `engine` | string | no | `cuttlefish` (default), `octopus`, or `ammonites` — see below |
 | `match` | string | no | Refines `octopus`/`ammonites` matching — see below |
-| `limit` | integer | no — **authenticated only** | Page size. Default and cap: 200,000 rows |
+| `limit` | integer | no — **authenticated only** | Page size for the *first* page. Default and cap: 200,000 rows; an explicit value is capped at 1,000,000 as an absolute sanity bound. **Required on every page after the first** — see [Pagination](#pagination) |
 | `offset` | integer | no — **authenticated only** | Rows to skip. Default: `0` |
 | `crawl` | boolean | no — **authenticated + `engine=cuttlefish` only** | Supplements results with a live discovery pass — see [Live crawl](#live-crawl) |
 
@@ -115,6 +115,8 @@ curl -H "X-API-Key: $KEY" "https://api.subdomain.center/?domain=example.com&limi
 ```
 
 Advance `offset` by the previous page's `X-Result-Count` (or read `X-Next-Offset` directly) until a response comes back with `X-Truncated: false` — that's the last page.
+
+**`limit` must be repeated on every page after the first.** Pagination is stateless — the server doesn't remember the page size a previous request used — so `offset > 0` without an explicit `limit=` returns `400`. Omitting it wouldn't just fail safe either: without this check, a client that walked pages by following only `X-Next-Offset` would silently fall back to the server's full default page size on page two, which can be orders of magnitude larger than the page size it started with. Always send the exact same `limit=` value you used on page one.
 
 ### Live crawl
 
@@ -172,7 +174,7 @@ Rate-limited requests receive `429` with a `Retry-After` header (seconds until y
 
 | Status | Meaning |
 |---|---|
-| `400` | Missing/invalid `domain` or `keyword`, unknown `engine`/`match`, or invalid `limit`/`offset` |
+| `400` | Missing/invalid `domain` or `keyword`, unknown `engine`/`match`, invalid/out-of-range `limit`/`offset`, or `offset` set without a `limit` |
 | `401` | An API key was supplied but isn't valid |
 | `429` | Rate limit exceeded (`Retry-After` header included) |
 | `503` | A requested engine's index isn't currently available, or the service is temporarily overloaded |
@@ -224,7 +226,7 @@ curl "https://api.exploit.observer/?keyword=CVE-2024-1234"
 ```json
 {
   "description": "Exploit Observer has 4 entries in 2 file formats related to CVE-2024-1234. <original description text>",
-  "products": ["cpe:2.3:a:vendor:product:*:*:*:*:*:*:*:*"],
+  "products": ["vedaspid:vendor__product@1.2.3"],
   "clusters": ["https://api.exploit.observer/?keyword=VEDAS:ABCDEF"],
   "entries": {
     "python": ["https://github.com/.../poc.py"],
@@ -232,7 +234,13 @@ curl "https://api.exploit.observer/?keyword=CVE-2024-1234"
   },
   "related": ["GHSA-xxxx-xxxx-xxxx", "EDB-51234"],
   "aliases": ["GHSA-xxxx-xxxx-xxxx"],
-  "maturity": 0.8421356,
+  "scores": {
+    "vedas": 0.8421356,
+    "epss": 0.00043,
+    "cvss": {"score": 9.8, "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H", "severity": "CRITICAL"}
+  },
+  "kev": false,
+  "cwe": ["CWE-79"],
   "vedas-timestamp": "2026-07-30 12:00:00.000000"
 }
 ```
@@ -240,21 +248,27 @@ curl "https://api.exploit.observer/?keyword=CVE-2024-1234"
 | Field | Meaning |
 |---|---|
 | `description` | Summary of the identifier, including how many related entries exist |
-| `products` | Affected products, as CPE 2.3 URIs where known |
+| `products` | Affected products/versions, as `vedaspid:{vendor}__{product}@{version}` identifiers |
 | `clusters` | Links to related identifiers grouped under the same underlying issue |
 | `entries` | Related links (PoCs, write-ups, exploit code, …), grouped by source language, or `unknown` for plain links |
 | `related` | Every identifier reachable through this entry's known relationships — includes both true aliases and advisories the source documents as related-but-distinct issues |
 | `aliases` | Narrower than `related`: only identifiers the source explicitly states are **the same vulnerability** under another name. Use this field, not `related`, when you need identity ("is this the same issue as that one") |
-| `maturity` | A `0`–`1` confidence score combining every corroborating signal Exploit Observer has for this identifier |
+| `scores.vedas` | A `0`–`1` confidence score combining every corroborating signal Exploit Observer has for this identifier (this was a bare top-level `maturity` field before it moved under `scores` — same value, same meaning) |
+| `scores.epss` | The current EPSS score for the identifier actually queried. `0.0` if none on file. Not aggregated across the cluster the way `products`/`cwe` are — EPSS only ever keys by a real CVE id |
+| `scores.cvss` | `{"score", "vector", "severity"}` for the identifier's cluster, or `null` if no CVSS data exists anywhere in it. GHSA/OSSF (OSV-schema) sources never publish a computed numeric base score — only `vector`/`severity` — so `score` is `null` for those even when the rest is present. When a CVE and its GHSA counterpart are clustered together, the CVE's numeric-scored entry is preferred |
+| `kev` | Whether the identifier actually queried is listed in CISA's Known Exploited Vulnerabilities catalog. Scoped to that identifier, not aggregated across its cluster |
+| `cwe` | Every distinct CWE weakness classification found across the identifier's full cluster, deduped and sorted. `[]` if none exist anywhere in the cluster |
 | `vedas-timestamp` | When this entry was last updated |
 
 ### Enrichment
 
-`enrich=true` on a `CVE-` or `GHSA-` identifier returns that identifier's full upstream advisory record (CVE-JSON5 / GHSA format) merged with Exploit Observer's own findings: corroborating references, related identifiers, affected products, current maturity score, and current EPSS score. Any other field from the underlying upstream record passes through unchanged.
+`enrich=true` on a `CVE-` or `GHSA-` identifier returns that identifier's full upstream advisory record (CVE-JSON5 / GHSA format) merged with Exploit Observer's own findings: corroborating references, related identifiers, affected products, and the same `scores` (`vedas`/`epss`/`cvss`), `kev`, and `cwe` fields described above.
 
 ```bash
 curl "https://api.exploit.observer/?keyword=CVE-2024-1234&enrich=true"
 ```
+
+For a `CVE-` identifier, these sit under a `containers.vedas` container alongside the upstream CVE-JSON5 record; for a `GHSA-` identifier they sit directly at the top level of the returned document instead, since GHSA's own JSON has no equivalent wrapper to nest them under. `cveMetadata.dateUpdated` (or `modified`, for non-CVE records) reflects when the record was last refreshed. Any other field from the underlying upstream record passes through unchanged.
 
 Returns `{}` if no enriched record exists for the given identifier.
 
