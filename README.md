@@ -17,11 +17,12 @@ Both APIs share the same authentication model: requests work with no key at a li
   - [Errors](#errors)
 - [Exploit Observer](#exploit-observer)
   - [Query an identifier — `GET /`](#query-an-identifier--get-)
-  - [Enrichment](#enrichment)
   - [Non-CVE clusters — `GET /noncve/{engine}`](#non-cve-clusters--get-noncveengine)
   - [Watchlists](#watchlists)
   - [Aggregate stats — `GET /stats`](#aggregate-stats--get-stats)
   - [Service health — `GET /health`](#service-health--get-health-1)
+  - [Response headers](#response-headers-1)
+  - [CORS](#cors)
   - [Rate limits](#rate-limits-1)
   - [Errors](#errors-1)
   - [Supported vulnerability identifiers](#supported-vulnerability-identifiers)
@@ -33,12 +34,13 @@ Both APIs share the same authentication model: requests work with no key at a li
 
 | | How | Notes |
 |---|---|---|
-| **Anonymous** | no header | Limited results, limited rate |
-| **Authenticated** | `X-API-Key: <key>` header, or `Authorization: Bearer <key>` | Full results, higher/unlimited rate |
+| **Anonymous** | no header | Limited rate; on Subdomain Center, also a limited sample |
+| **Authenticated** | `X-API-Key: <key>` header, or `Authorization: Bearer <key>` | Higher/unlimited rate; on Subdomain Center, complete results |
 
 - Keys are accepted **only** via header — never as a query-string parameter, since URLs are logged by proxies, browsers, and edge infrastructure.
-- Both APIs return the **same response shape** for a given query at either tier; authentication changes result completeness and rate limit, not the data model.
-- An unrecognized key returns `401` (Subdomain Center) — see each product's error table for specifics.
+- Both APIs return the **same response shape** for a given query at either tier; the data model never changes with authentication.
+- What a key buys differs by product. **Subdomain Center**: anonymous callers get a sample of up to 500 names, authenticated callers get the complete result set with pagination. **Exploit Observer**: a key raises your rate limit and unlocks `/noncve/{engine}`.
+- An unrecognized key returns `401` on both products' main query endpoints. Exploit Observer's `/noncve/{engine}` answers `{}` for a missing or invalid key instead. See each product's error table.
 
 ---
 
@@ -198,16 +200,17 @@ Looks up vulnerabilities and exploits by identifier, correlates them across sour
 ### Query an identifier — `GET /`
 
 ```
-GET /?keyword={VID}&enrich={TRUE/FALSE}&match={MATCH}
+GET /?keyword={VID}&match={MATCH}
 ```
 
 | Parameter | Type | Required | Notes |
 |---|---|---|---|
 | `keyword` | string | yes | Any [supported identifier](#supported-vulnerability-identifiers), a `cpe:2.3:` or `pkg:` URI, or a free-text vendor/product search |
-| `enrich` | boolean | no | `true`/`1`/`yes`. Only takes effect for `CVE-` and `GHSA-` identifiers — see [Enrichment](#enrichment) |
 | `match` | string | no | Only applies to free-text/vendor-product searches (ignored once `keyword` resolves to a known identifier directly) |
 
-`keyword` is capped at 2048 characters. An unmatched or invalid `keyword` returns `[]` rather than an error.
+`keyword` is capped at 2048 characters and is not case-sensitive. An unmatched or invalid `keyword` returns an empty result rather than an error.
+
+Fields that carry no data for a given identifier may be omitted from the response — read them with a default rather than by direct indexing.
 
 #### `match` modes (free-text search only)
 
@@ -260,18 +263,6 @@ curl "https://api.exploit.observer/?keyword=CVE-2024-1234"
 | `cwe` | Every distinct CWE weakness classification found across the identifier's full cluster, deduped and sorted. `[]` if none exist anywhere in the cluster |
 | `vedas-timestamp` | When this entry was last updated |
 
-### Enrichment
-
-`enrich=true` on a `CVE-` or `GHSA-` identifier returns that identifier's full upstream advisory record (CVE-JSON5 / GHSA format) merged with Exploit Observer's own findings: corroborating references, related identifiers, affected products, and the same `scores` (`vedas`/`epss`/`cvss`), `kev`, and `cwe` fields described above.
-
-```bash
-curl "https://api.exploit.observer/?keyword=CVE-2024-1234&enrich=true"
-```
-
-For a `CVE-` identifier, these sit under a `containers.vedas` container alongside the upstream CVE-JSON5 record; for a `GHSA-` identifier they sit directly at the top level of the returned document instead, since GHSA's own JSON has no equivalent wrapper to nest them under. `cveMetadata.dateUpdated` (or `modified`, for non-CVE records) reflects when the record was last refreshed. Any other field from the underlying upstream record passes through unchanged.
-
-Returns `{}` if no enriched record exists for the given identifier.
-
 ### Non-CVE clusters — `GET /noncve/{engine}`
 
 **Requires authentication.** An anonymous or invalid key returns `{}` rather than an error.
@@ -296,9 +287,11 @@ curl -H "X-API-Key: $KEY" "https://api.exploit.observer/noncve/exploitable"
 {"VEDAS:ABCDEF": "", "...": "..."}
 ```
 
+An unrecognized `engine` returns `404`. Results change only when a new dataset is published, so there is nothing to gain from polling faster than that.
+
 ### Watchlists
 
-No authentication required for any of the following. Each returns `{}`/`[]` if the current watchlist exceeds 2,000 entries, to keep the payload bounded.
+No authentication and no rate limit on any of the following.
 
 ```bash
 curl "https://api.exploit.observer/watchlist/identifiers"
@@ -308,7 +301,7 @@ curl "https://api.exploit.observer/watchlist/technologies"
 
 | Endpoint | Returns |
 |---|---|
-| `/watchlist/identifiers` | The current list of tracked identifiers |
+| `/watchlist/identifiers` | The current list of freshly-tracked identifiers |
 | `/watchlist/describers` | The same list, each with a short description |
 | `/watchlist/technologies` | Currently-trending technologies/products by mention weight |
 
@@ -341,26 +334,44 @@ curl "https://api.exploit.observer/health"
 {"status": "ok", "last_run": "2026-07-30 12:00:00.000000", "snapshot_age_seconds": 42.3}
 ```
 
-`last_run` is `null` if the dataset has never completed an initial build.
+`last_run` is `null` if the dataset has never completed an initial build. `snapshot_age_seconds` is how long the currently-served dataset has been in use.
+
+### Response headers
+
+| Header | Meaning |
+|---|---|
+| `X-Result-Count` | On `GET /`: the total number of entries across every language bucket in `entries` |
+| `Retry-After` | Present on `429`: seconds until you may retry |
+| `Cache-Control` | Always `no-store, private` |
+
+Responses are not cacheable by shared infrastructure. If you want caching, do it on your side, keyed by your own API key.
+
+### CORS
+
+Cross-origin browser requests are allowed from approved origins only. `GET` and `OPTIONS` are permitted, `X-API-Key` and `Authorization` are accepted as request headers, and `X-Result-Count` is exposed so JavaScript can read it. Contact us to have an origin approved.
+
+**Do not put an API key in front-end code.** It is readable by anyone who opens the page. Proxy Exploit Observer through your own backend and keep the key there.
 
 ### Rate limits
 
 | Endpoint(s) | Anonymous | Authenticated |
 |---|---|---|
 | `GET /` (main query) | 2 requests/minute per IP | unlimited by default |
-| `/noncve/{engine}` | requires a key (`{}` otherwise) | unlimited by default |
+| `/noncve/{engine}` | rate limited per IP; returns `{}` without a valid key | unlimited by default |
 | `/watchlist/*`, `/stats`, `/health` | unlimited | unlimited |
 
-Rate-limited requests receive `429` with a `Retry-After` header.
+Rate-limited requests receive `429` with a `Retry-After` header. Requests carrying an invalid key count against the anonymous limit.
 
 ### Errors
 
 | Status | Meaning |
 |---|---|
-| `401` | An API key was supplied but isn't valid |
+| `401` | An API key was supplied but isn't valid (`GET /`; `/noncve` answers `{}` instead) |
+| `404` | Unrecognized `/noncve/{engine}` |
 | `429` | Rate limit exceeded (`Retry-After` header included) |
+| `504` | The query took too long to complete |
 
-The main query endpoint (`GET /`) never returns a `4xx` for an unmatched or malformed `keyword` — it returns `[]`.
+The main query endpoint (`GET /`) never returns a `4xx` for an unmatched or malformed `keyword` — it returns an empty result.
 
 ### Supported vulnerability identifiers
 
