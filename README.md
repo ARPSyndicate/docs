@@ -432,4 +432,4 @@ The main query endpoint (`GET /`) never returns a `4xx` for an unmatched or malf
 
 ## Enterprise & partner access
 
-Need bulk access, dedicated infrastructure, or higher throughput than the standard authenticated tier? Reach out via the [pricing page](https://www.arpsyndicate.io/pricing.html) to discuss enterprise and partner options.
+Need bulk access, dedicated infrastructure, or higher throughput than the standard authenticated tier? Reach out via the [register page](https://arpsyndicate.io/#register) to discuss enterprise and partner options.
